@@ -1,9 +1,13 @@
 {
   "name": "grafana-dashboard-provisioner",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Fetches grafana dashboards and replace input variables",
   "main": "dist/index.js",
   "bin": "dist/index.js",
+  "homepage": "https://github.com/ejhayes/grafana-dashboard-provisioner",
+  "repository": {
+    "url": "https://github.com/ejhayes/grafana-dashboard-provisioner"
+  },
   "scripts": {
     "build": "rimraf dist && tsc -p tsconfig.build.json && ts-node scripts/make-cli-executable.ts",
     "test": "jest"
