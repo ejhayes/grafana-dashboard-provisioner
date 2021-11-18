@@ -12,7 +12,8 @@
   "scripts": {
     "build": "rimraf dist && tsc -p tsconfig.build.json && ts-node scripts/make-cli-executable.ts",
     "test": "jest",
-    "prepublish": "npm run build && npm run test"
+    "test:e2e": "npx ts-node src/index.ts e2e/inputs e2e/outputs",
+    "prepublish": "npm run build && npm run test && npm run test:e2e"
   },
   "author": "Eric Hayes <eric@deployfx.com>",
   "license": "ISC",
