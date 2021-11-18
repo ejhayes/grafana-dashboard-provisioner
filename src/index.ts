@@ -84,9 +84,13 @@ class GrafanaDashboardProvisionerParser {
                     }
 
                     const dashboardPath = join(this.outputPath, `${provider.options.gnetId}.json`)
-                    const dashboard = await this.getDashboardById(provider.options.gnetId)
+                    const dashboard = JSON.parse(await this.getDashboardById(provider.options.gnetId))
                     
-                    writeFileSync(dashboardPath, this.tokenize(dashboard, provider.options.inputs))
+                    if (dashboard.title && provider.name !== "") {
+                        dashboard.title = provider.name
+                    }
+
+                    writeFileSync(dashboardPath, this.tokenize(JSON.stringify(dashboard, null, 2), provider.options.inputs))
                     provider.type = 'file'
                     provider.options = {
                         path: join(this.config.config.DEST_PATH_PREFIX, `${provider.options.gnetId}.json`)
@@ -140,12 +144,6 @@ class GrafanaDashboardProvisionerParser {
     }
 }
 
-// fetch provisioner file
-// parse inputs - look for type=url
-// for each url, download to local file
-// generate final version of the file
-
-// if running directly
 if (require.main === module) {
 
     if (process.argv.length !== 4) {

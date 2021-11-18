@@ -1,16 +1,18 @@
 {
   "name": "grafana-dashboard-provisioner",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Fetches grafana dashboards and replace input variables",
   "main": "dist/index.js",
   "bin": "dist/index.js",
+  "files": ["dist"],
   "homepage": "https://github.com/ejhayes/grafana-dashboard-provisioner",
   "repository": {
     "url": "https://github.com/ejhayes/grafana-dashboard-provisioner"
   },
   "scripts": {
     "build": "rimraf dist && tsc -p tsconfig.build.json && ts-node scripts/make-cli-executable.ts",
-    "test": "jest"
+    "test": "jest",
+    "prepublish": "npm run build && npm run test"
   },
   "author": "Eric Hayes <eric@deployfx.com>",
   "license": "ISC",
