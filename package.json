@@ -1,6 +1,6 @@
 {
   "name": "grafana-dashboard-provisioner",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Fetches grafana dashboards and replace input variables",
   "main": "dist/index.js",
   "bin": "dist/index.js",

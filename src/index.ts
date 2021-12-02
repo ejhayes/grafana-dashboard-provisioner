@@ -2,7 +2,7 @@
 
 import {load, dump} from "js-yaml"
 import {readdir, mkdirSync, writeFileSync, readFileSync} from "fs"
-import {join} from "path"
+import {posix} from "path"
 import {cleanEnv, str, num, url} from 'envalid'
 import {promisify} from 'util'
 import {get} from 'https'
@@ -71,9 +71,9 @@ class GrafanaDashboardProvisionerParser {
             apiVersion: 1,
             providers: []
         }
-        const destOutputPath = join(this.outputPath, filename)
+        const destOutputPath = posix.join(this.outputPath, filename)
 
-        const provisioner = load(readFileSync(join(this.inputPath, filename)).toString()) as GrafanaDashboardProvisioner
+        const provisioner = load(readFileSync(posix.join(this.inputPath, filename)).toString()) as GrafanaDashboardProvisioner
         
         if (provisioner.providers) {
             for (const provider of provisioner.providers) {
@@ -83,7 +83,7 @@ class GrafanaDashboardProvisionerParser {
                         throw new Error(`Provider ${provider.name} missing required properties: gnetId`)
                     }
 
-                    const dashboardPath = join(this.outputPath, `${provider.options.gnetId}.json`)
+                    const dashboardPath = posix.join(this.outputPath, `${provider.options.gnetId}.json`)
                     const dashboard = JSON.parse(await this.getDashboardById(provider.options.gnetId))
                     
                     if (dashboard.title && provider.name !== "") {
@@ -93,7 +93,7 @@ class GrafanaDashboardProvisionerParser {
                     writeFileSync(dashboardPath, this.tokenize(JSON.stringify(dashboard, null, 2), provider.options.inputs))
                     provider.type = 'file'
                     provider.options = {
-                        path: join(this.config.config.DEST_PATH_PREFIX, `${provider.options.gnetId}.json`)
+                        path: posix.join(this.config.config.DEST_PATH_PREFIX, `${provider.options.gnetId}.json`)
                     }
                 }
 
